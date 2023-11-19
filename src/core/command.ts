@@ -9,8 +9,8 @@
 import { CommandInteraction, SlashCommandBuilder } from "npm:discord.js@14.14";
 
 export interface Command {
-	data: SlashCommandBuilder;
+  data: SlashCommandBuilder;
 
-	getData(): SlashCommandBuilder;
-	execute(interaction: CommandInteraction): Promise<void>;
+  getData(): SlashCommandBuilder;
+  execute(interaction: CommandInteraction): Promise<void>;
 }

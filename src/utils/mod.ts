@@ -12,7 +12,7 @@
  * @returns {string | undefined} - The token or `undefined` if not found
  */
 export function getDiscordToken(): string | undefined {
-	return Deno.env.get("DISCORD_TOKEN");
+  return Deno.env.get("DISCORD_TOKEN");
 }
 
 /**
@@ -21,5 +21,5 @@ export function getDiscordToken(): string | undefined {
  * @returns {string | undefined} - The client id or `undefined` if not found
  */
 export function getClientId(): string | undefined {
-	return Deno.env.get("CLIENT_ID");
+  return Deno.env.get("CLIENT_ID");
 }
