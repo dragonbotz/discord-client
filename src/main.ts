@@ -13,13 +13,13 @@ import {
   GatewayIntentBits,
   REST,
   Routes,
-  SlashCommandBuilder,
 } from "npm:discord.js@14.14";
 import { getClientId, getDiscordToken } from "./utils/mod.ts";
 
 // commands
 import { Command } from "./core/command.ts";
 import { HelloCommand } from "./commands/hello.ts";
+import { PlayCommand } from "./commands/play.ts";
 
 /**
  * Dragon Bot Z's Discord client entry point
@@ -51,11 +51,12 @@ async function main(): Promise<void> {
 
   // load commands
   const commands = new Map<string, Command>()
-    .set("hello", new HelloCommand());
+    .set("hello", new HelloCommand())
+	.set("play", new PlayCommand());
 
   // puts the commands in an array to pass to discord
   const commandsRegister = [];
-  for (let key of commands.keys()) {
+  for (const key of commands.keys()) {
     commandsRegister.push(commands.get(key).getData().toJSON());
   }
 
@@ -71,6 +72,8 @@ async function main(): Promise<void> {
     if (!interaction.isChatInputCommand()) {
       return;
     }
+
+	console.log(interaction.commandName);
 
     const command = commands.get(interaction.commandName);
     if (command == undefined) {
