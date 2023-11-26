@@ -20,6 +20,7 @@ import { getClientId, getDiscordToken } from "./utils/mod.ts";
 import { Command } from "./core/command.ts";
 import { HelloCommand } from "./commands/hello.ts";
 import { PlayCommand } from "./commands/play.ts";
+import { SummonCommand } from "./commands/summon.ts";
 
 /**
  * Dragon Bot Z's Discord client entry point
@@ -52,7 +53,8 @@ async function main(): Promise<void> {
   // load commands
   const commands = new Map<string, Command>()
     .set("hello", new HelloCommand())
-	.set("play", new PlayCommand());
+    .set("play", new PlayCommand())
+    .set("summon", new SummonCommand());
 
   // puts the commands in an array to pass to discord
   const commandsRegister = [];
@@ -72,8 +74,6 @@ async function main(): Promise<void> {
     if (!interaction.isChatInputCommand()) {
       return;
     }
-
-	console.log(interaction.commandName);
 
     const command = commands.get(interaction.commandName);
     if (command == undefined) {
