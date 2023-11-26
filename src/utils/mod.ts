@@ -5,7 +5,7 @@
  *
  * @author Lahcène Belhadi <lahcene.belhadi@gmail.com>
  */
-import { EmbedBuilder, Client } from "npm:discord.js@14.14";
+import { Client, EmbedBuilder } from "npm:discord.js@14.14";
 
 /**
  * Retrieves the client's discord token
@@ -31,18 +31,29 @@ export function getClientId(): string | undefined {
  * @returns {EmbedBuilder} - The Dragon Bot Z's default Embed
  */
 export function getDefaultEmbed(client: Client): EmbedBuilder {
-	// for copyright
-	const currentYear = new Date().getFullYear();
+  // for copyright
+  const currentYear = new Date().getFullYear();
 
-	const defaultUserName = "Dragon Bot Z";
-	let userName = defaultUserName;
-	if (client.user != null) {
-		userName = client.user.username;
-	}
+  const defaultUserName = "Dragon Bot Z";
+  let userName = defaultUserName;
+  if (client.user != null) {
+    userName = client.user.username;
+  }
 
-	return new EmbedBuilder()
-		.setColor(0xfd8819)
-		.setAuthor({name: userName})
-		.setFooter({text: `©2019 - ${currentYear} Elias & Lahcène Belhadi`}) 
-		.setTimestamp()
+  return new EmbedBuilder()
+    .setColor(0xfd8819)
+    .setAuthor({ name: userName })
+    .setFooter({ text: `©2019 - ${currentYear} Elias & Lahcène Belhadi` })
+    .setTimestamp();
+}
+
+/**
+ * Tells if the given JSON object is empty or not
+ *
+ * @param {object} json - The JSON object to test
+ *
+ * @returns {boolean} - True if the given object is empty, false otherwise
+ */
+export function isEmptyJSON(json: object): boolean {
+  return Object.keys(json).length == 0;
 }
