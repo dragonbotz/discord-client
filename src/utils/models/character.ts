@@ -25,9 +25,13 @@ export class Character {
    * @returns {Character} - The newly created Character instance
    */
   static newFromJSON(character: Character): Character {
-	  const newCharacter = new Character(character.id, character.name, character.image_url);
+    const newCharacter = new Character(
+      character.id,
+      character.name,
+      character.image_url,
+    );
 
-	  return newCharacter;
+    return newCharacter;
   }
 
   /**

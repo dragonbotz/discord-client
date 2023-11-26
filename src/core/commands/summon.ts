@@ -57,7 +57,7 @@ export class Summon {
     }
 
     embed.setTitle(`${user.globalName}'s summon`);
-	embed.setDescription(character.getName());
+    embed.setDescription(character.getName());
     embed.setImage(character.getImageUrl());
 
     message.embeds = [embed];
@@ -80,7 +80,7 @@ export class Summon {
         return null;
       }
 
-	  return Character.newFromJSON(responseResolved);
+      return Character.newFromJSON(responseResolved);
     } catch (error) {
       console.error(`Summon#summon received an error: ${error}`);
       return null;
