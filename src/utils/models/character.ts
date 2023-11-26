@@ -6,14 +6,28 @@
  * @author Lahcène Belhadi <lahcene.belhadi@gmail.com>
  */
 export class Character {
-  id: number;
-  name: string;
-  imageUrl: string;
+  private id: number;
+  private name: string;
+  private image_url: string;
 
-  constructor(id: number, name: string, imageUrl: string) {
+  constructor(id: number, name: string, image_url: string) {
     this.id = id;
     this.name = name;
-    this.imageUrl = imageUrl;
+    this.image_url = image_url;
+  }
+
+  /**
+   * Constructs a Character instance based on the given Character-like JSON
+   * object
+   *
+   * @param {Character} character - The character object to build new Character from
+   *
+   * @returns {Character} - The newly created Character instance
+   */
+  static newFromJSON(character: Character): Character {
+	  const newCharacter = new Character(character.id, character.name, character.image_url);
+
+	  return newCharacter;
   }
 
   /**
@@ -40,6 +54,6 @@ export class Character {
    * @returns {string} - The character's image url
    */
   getImageUrl(): string {
-    return this.imageUrl;
+    return this.image_url;
   }
 }
