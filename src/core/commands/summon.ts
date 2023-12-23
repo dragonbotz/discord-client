@@ -22,7 +22,17 @@ export class Summon {
 	 * @returns {Message} - The message to display on discord
 	 */
   async executeCommand(client: Client, user: User): Promise<Message> {
-    const character: Character | null = await this.summon();
+    let character: Character | null = await this.summon();
+
+    let characterStored = false;
+    if (character != null) {
+      characterStored = await this.storeCharacter(user.id, character.getId());
+    }
+
+    // nullify the summoned character if we cannot store it
+    if (characterStored == false) {
+      character = null;
+    }
 
     return this.message(client, user, character);
   }
@@ -85,5 +95,34 @@ export class Summon {
       console.error(`Summon#summon received an error: ${error}`);
       return null;
     }
+  }
+
+  /**
+   * Stores a character to the player's character collection
+   *
+   * @param {number} playerId - The player id
+   * @param {number} characterId - The character id
+   */
+  private async storeCharacter(
+    playerId: string,
+    characterId: number,
+  ): Promise<boolean> {
+    const characterCollectionUrl = "http://127.0.0.1:58183/character/add";
+    try {
+      const response = await fetch(characterCollectionUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ player: playerId, character: characterId }),
+      });
+
+	  if (response.status != 200) {
+		  return false;
+	  }
+    } catch (error) {
+      console.error(`Summon#storeCharacter received an error: ${error}`);
+      return false;
+    }
+
+    return true;
   }
 }
