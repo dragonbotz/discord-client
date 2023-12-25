@@ -22,19 +22,14 @@ export class Summon {
 	 * @returns {Message} - The message to display on discord
 	 */
   async executeCommand(client: Client, user: User): Promise<Message> {
-    let character: Character | null = await this.summon();
+    const character: Character | null = await this.summon();
 
-    let characterStored = false;
+    let stored = false;
     if (character != null) {
-      characterStored = await this.storeCharacter(user.id, character.getId());
+      stored = await this.storeCharacter(user.id, character.getId());
     }
 
-    // nullify the summoned character if we cannot store it
-    if (characterStored == false) {
-      character = null;
-    }
-
-    return this.message(client, user, character);
+    return this.message(client, user, character, stored);
   }
 
   /**
@@ -50,11 +45,12 @@ export class Summon {
     client: Client,
     user: User,
     character: Character | null,
+    stored: boolean,
   ): Message {
     const embed: EmbedBuilder = getDefaultEmbed(client);
 
     const message: Message = { content: "", embeds: [], components: [] };
-    if (character == null) {
+    if (character == null || stored == false) {
       message.content =
         "❌ An error occured while summoning a character. Please try again later...";
       return message;
@@ -67,7 +63,7 @@ export class Summon {
     }
 
     embed.setTitle(`${user.globalName}'s summon`);
-    embed.setDescription(character.getName());
+    embed.setDescription(character.getNameWithRarity());
     embed.setImage(character.getImageUrl());
 
     message.embeds = [embed];
@@ -115,9 +111,9 @@ export class Summon {
         body: JSON.stringify({ player: playerId, character: characterId }),
       });
 
-	  if (response.status != 200) {
-		  return false;
-	  }
+      if (response.status != 200) {
+        return false;
+      }
     } catch (error) {
       console.error(`Summon#storeCharacter received an error: ${error}`);
       return false;

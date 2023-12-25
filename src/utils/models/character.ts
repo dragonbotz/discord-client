@@ -5,15 +5,19 @@
  *
  * @author Lahcène Belhadi <lahcene.belhadi@gmail.com>
  */
+import { RarityIcon, getRarityById, getRarityIcon } from "../icons/rarity.ts";
+
 export class Character {
   private id: number;
   private name: string;
   private image_url: string;
+  private rarity: number;
 
-  constructor(id: number, name: string, image_url: string) {
+  constructor(id: number, name: string, image_url: string, rarity: number) {
     this.id = id;
     this.name = name;
     this.image_url = image_url;
+    this.rarity = rarity;
   }
 
   /**
@@ -29,6 +33,7 @@ export class Character {
       character.id,
       character.name,
       character.image_url,
+      character.rarity,
     );
 
     return newCharacter;
@@ -53,11 +58,32 @@ export class Character {
   }
 
   /**
+   * Returns Character's name with rarity and rarity modifier
+   *
+   * @returns {string} - The character's name with rarity modifier
+   */
+  getNameWithRarity(): string {
+	  const rarityIcon: RarityIcon = getRarityById(this.rarity);
+	  const rarityIconStr: string = getRarityIcon(rarityIcon);
+
+	  return `${rarityIconStr} ${this.name}`
+  }
+
+  /**
    * Returns Character's image url
    *
    * @returns {string} - The character's image url
    */
   getImageUrl(): string {
     return this.image_url;
+  }
+
+  /**
+   * Returns Character's rarity
+   *
+   * @returns {number} - The character's rarity
+   */
+  getRarity(): number {
+    return this.rarity;
   }
 }
