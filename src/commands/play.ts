@@ -30,15 +30,12 @@ export class PlayCommand implements Command {
     // check which button has been clicked
     let clicked = await reply.awaitMessageComponent({
       filter: (u) => u.user.id === interaction.user.id,
-      time: 60_000,
     });
+
     if (clicked.customId == "summonButton") {
       const summonCommand = new Summon();
-      await reply.edit(
-        await summonCommand.executeCommand(
-          interaction.client,
-          interaction.user,
-        ),
+      await summonCommand.executeCommand(
+        clicked,
       );
     }
   }
