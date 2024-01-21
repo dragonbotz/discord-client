@@ -5,7 +5,7 @@
  *
  * @author Lahcène Belhadi <lahcene.belhadi@gmail.com>
  */
-import { RarityIcon, getRarityById, getRarityIcon } from "../icons/rarity.ts";
+import { getRarityById, getRarityIcon, RarityIcon } from "../icons/rarity.ts";
 
 export class Character {
   private id: number;
@@ -63,10 +63,10 @@ export class Character {
    * @returns {string} - The character's name with rarity modifier
    */
   getNameWithRarity(): string {
-	  const rarityIcon: RarityIcon = getRarityById(this.rarity);
-	  const rarityIconStr: string = getRarityIcon(rarityIcon);
+    const rarityIcon: RarityIcon = getRarityById(this.rarity);
+    const rarityIconStr: string = getRarityIcon(rarityIcon);
 
-	  return `${rarityIconStr} ${this.name}`
+    return `${rarityIconStr} ${this.name}`;
   }
 
   /**
