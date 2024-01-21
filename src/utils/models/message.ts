@@ -7,8 +7,17 @@
  */
 import { ActionRowBuilder, EmbedBuilder } from "npm:discord.js@14.14";
 
-export type Message = {
+export type MessageContent = {
   content: string;
   embeds: EmbedBuilder[];
   components: ActionRowBuilder[];
 };
+
+/**
+ * Generates a default MessageContent
+ *
+ * @returns {MessageContent} - A default MessageContent
+ */
+export function defaultMessageContent(): MessageContent {
+  return { content: "", embeds: [], components: [] };
+}
